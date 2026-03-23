@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, serif;
+}
+
+h1 {
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 50px;
+}
+
+@tailwind base; /* базовые стили  */
+@tailwind components; /* готовые компоненты типа стили для кнопок форм и тд */
+@tailwind utilities; /* инструменты (без них таилвинд не работает) */
