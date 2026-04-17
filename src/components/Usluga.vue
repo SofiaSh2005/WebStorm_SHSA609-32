@@ -1,29 +1,59 @@
 <template>
-  <DataTable
-      :value="usluga"
-      :lazy="true"
-      :paginator="true"
-      :rows="perpage"
-      :rowsPerPageOptions="[2, 5, 10]"
-      :totalRecords="usluga_total"
-      @page="onPageChange"
-      :first="offset"
-  >
-    <Column field="id" header="ID" />
-    <Column field="nazvanie" header="Название услуги" />
-    <Column field="stoimost" header="Стоимость" />
-  </DataTable>
+  <div class="p-4">
+
+    <Button
+        label="Добавить услугу"
+        icon="pi pi-plus"
+        class="mb-3"
+        @click="$router.push('/createusluga')"
+    />
+
+    <DataTable
+        :value="usluga"
+        :lazy="true"
+        :paginator="true"
+        :rows="perpage"
+        :rowsPerPageOptions="[2, 5, 10]"
+        :totalRecords="usluga_total"
+        @page="onPageChange"
+        :first="offset"
+    >
+
+      <Column field="id" header="ID" />
+      <Column field="nazvanie" header="Название услуги" />
+      <Column field="stoimost" header="Стоимость" />
+
+
+      <Column header="Фото">
+        <template #body="slotProps">
+          <img
+              v-if="slotProps.data.image"
+              :src="slotProps.data.image"
+              style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;"
+          />
+        </template>
+      </Column>
+
+    </DataTable>
+
+  </div>
 </template>
 
 <script>
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import Button from "primevue/button";
+
 import { useDataStore } from '@/stores/dataStore';
 
 export default {
   name: "Usluga",
 
-  components: { DataTable, Column },
+  components: {
+    DataTable,
+    Column,
+    Button
+  },
 
   data() {
     return {
@@ -34,8 +64,13 @@ export default {
   },
 
   computed: {
-    usluga() { return this.dataStore.usluga; },
-    usluga_total() { return this.dataStore.usluga_total; }
+    usluga() {
+      return this.dataStore.usluga;
+    },
+
+    usluga_total() {
+      return this.dataStore.usluga_total;
+    }
   },
 
   mounted() {
@@ -47,6 +82,7 @@ export default {
     onPageChange(event) {
       this.offset = event.first;
       this.perpage = event.rows;
+
       const page = this.offset / this.perpage;
       this.dataStore.get_usluga(page, this.perpage);
     }
