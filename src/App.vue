@@ -136,3 +136,6 @@ export default {
   color: red;
 }
 </style>
+
+<Toast />
+<ConfirmPopup />

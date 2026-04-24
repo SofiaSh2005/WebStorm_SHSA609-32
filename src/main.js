@@ -1,20 +1,32 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createPinia } from 'pinia'
-import router from '@/router.js'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
-import ToastService from 'primevue/toastservice'
+import { createPinia } from 'pinia';
+import router from '@/router.js';
 
-import 'primeicons/primeicons.css'
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
 
-const app = createApp(App)
+import 'primeicons/primeicons.css';
 
-const pinia = createPinia()
+import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 
-app.use(pinia)
-app.use(router)
+import Toast from 'primevue/toast';
+import ConfirmPopup from 'primevue/confirmpopup';
+
+
+
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+
+app.component('Toast', Toast);
+app.component('ConfirmPopup', ConfirmPopup);
+
+app.use(ToastService);
+app.use(ConfirmationService);
 
 app.use(PrimeVue, {
     theme: {
@@ -25,8 +37,6 @@ app.use(PrimeVue, {
             cssLayer: false
         }
     }
-})
+});
 
-app.use(ToastService)
-
-app.mount('#app')
+app.mount('#app');
